@@ -13,13 +13,13 @@ namespace WebAddressBookTests
         [Test]
         public void ContactRemovalTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToHomeTab();
-            SelectContact();
-            RemoveContact();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Navigator.GoToHomeTab();
+            app.Contacts.SelectContact();
+            app.Contacts.RemoveContact();
             CheckforRemoving();
-            GoToHomeTab();
+            app.Navigator.GoToHomeTab();
         }
     }
 }

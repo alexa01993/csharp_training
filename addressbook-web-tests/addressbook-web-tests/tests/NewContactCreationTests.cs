@@ -15,9 +15,9 @@ namespace WebAddressBookTests
         [Test]
         public void NewContactCreation()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitNewContactCreation();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Contacts.InitNewContactCreation();
             ContactData contact = new ContactData("Anna");
             contact.Middlename = "Aleksandrovna";
             contact.Lastname = "Terentieva";
@@ -26,9 +26,9 @@ namespace WebAddressBookTests
             contact.Homephone = "559-779-8";
             contact.Mobilephone = "+79859874545";
             contact.Byear = "1996";
-            FillContactForm(contact);
-            SubmitGroupOrContactCreation();
-            ReturnToHomePage();
+            app.Contacts.FillContactForm(contact);
+            app.Groups.SubmitGroupOrContactCreation();
+            app.Navigator.ReturnToHomePage();
             //LogOut();
         }
     }
