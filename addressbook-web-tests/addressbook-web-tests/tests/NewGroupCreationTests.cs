@@ -12,16 +12,21 @@ namespace WebAddressBookTests
         [Test]
         public void NewGroupCreation()
         {
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
-            app.Navigator.GoToGroupsPage();
-            app.Groups.InitNewGroupCreation();
             GroupData group = new GroupData("Family");
             group.Header = "HoleyWel";
             group.Footer = "street";
-            app.Groups.FillGroupFrom(group);
-            app.Groups.SubmitGroupOrContactCreation();
-            app.Navigator.GoBackToGroupsPage();
+
+            app.Groups.Create(group);
+        }
+
+        [Test]
+        public void EmptyGroupCreation()
+        {
+            GroupData group = new GroupData("");
+            group.Header = "";
+            group.Footer = "";
+
+            app.Groups.Create(group);
         }
     }
 }

@@ -14,13 +14,14 @@ namespace WebAddressBookTests
     public class TestBase
     {
         protected IWebDriver driver;
-        protected bool acceptNextAlert = true;
         protected ApplicationManager app;
 
         [SetUp]
         public void SetupTest()
         {
             app = new ApplicationManager();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
         }
 
         [TearDown]
@@ -28,13 +29,8 @@ namespace WebAddressBookTests
         {
             app.Stop();
         }
-        
-        protected void CheckforRemoving()
-        {
-            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
-        }
 
-        private bool IsElementPresent(By by)
+        public bool IsElementPresent(By by)
         {
             try
             {
@@ -47,7 +43,7 @@ namespace WebAddressBookTests
             }
         }
 
-        private bool IsAlertPresent()
+        public bool IsAlertPresent()
         {
             try
             {
@@ -57,28 +53,6 @@ namespace WebAddressBookTests
             catch (NoAlertPresentException)
             {
                 return false;
-            }
-        }
-
-        private string CloseAlertAndGetItsText()
-        {
-            try
-            {
-                IAlert alert = driver.SwitchTo().Alert();
-                string alertText = alert.Text;
-                if (acceptNextAlert)
-                {
-                    alert.Accept();
-                }
-                else
-                {
-                    alert.Dismiss();
-                }
-                return alertText;
-            }
-            finally
-            {
-                acceptNextAlert = true;
             }
         }
     }

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -11,18 +13,40 @@ namespace WebAddressBookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(IWebDriver driver) 
-            : base(driver)
+        protected bool acceptNextAlert;
+
+        public ContactHelper(ApplicationManager manager) 
+            : base(manager)
         {
 
         }
-        
-        public void InitNewContactCreation()
+
+        public ContactHelper Remove(int v)
+        {
+            manager.Navigator.GoToHomeTab();
+            SelectContact(7);
+            RemoveContact();
+            CheckforRemoving();
+            manager.Navigator.GoToHomeTab();
+            return this;
+        }
+
+        public ContactHelper Create(ContactData contact)
+        {
+            
+            InitNewContactCreation();
+            FillContactForm(contact);
+            SubmitGroupOrContactCreation();
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+        public ContactHelper InitNewContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
         }
 
-        public void FillContactForm(ContactData contact)
+        public ContactHelper FillContactForm(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contact.Name);
@@ -40,15 +64,54 @@ namespace WebAddressBookTests
             driver.FindElement(By.Name("mobile")).SendKeys(contact.Mobilephone);
             driver.FindElement(By.Name("byear")).Clear();
             driver.FindElement(By.Name("byear")).SendKeys(contact.Byear);
-        }
-        public void SelectContact()
-        {
-            driver.FindElement(By.Id("6")).Click();
+            return this;
         }
 
-        public void RemoveContact()
+        public ContactHelper SubmitGroupOrContactCreation()
+        {
+            driver.FindElement(By.Name("submit")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int number)
+        {
+            driver.FindElement(By.Id(number.ToString())).Click();
+            return this;
+        }
+
+        public ContactHelper CheckforRemoving()
+        {
+            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            return this;
+        }
+
+        
+        public string CloseAlertAndGetItsText()
+        {
+            try
+            {
+                IAlert alert = driver.SwitchTo().Alert();
+                string alertText = alert.Text;
+                if (acceptNextAlert)
+                {
+                    alert.Accept();
+                }
+                else
+                {
+                    alert.Dismiss();
+                }
+                return alertText;
+            }
+            finally
+            {
+                acceptNextAlert = true;
+            }
+        }
+
+        public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
         } 
     }
 }
