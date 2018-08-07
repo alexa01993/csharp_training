@@ -21,16 +21,7 @@ namespace WebAddressBookTests
 
         }
 
-        public ContactHelper Remove(int v)
-        {
-            manager.Navigator.GoToHomeTab();
-            SelectContact(7);
-            RemoveContact();
-            CheckforRemoving();
-            manager.Navigator.GoToHomeTab();
-            return this;
-        }
-
+        
         public ContactHelper Create(ContactData contact)
         {
             
@@ -40,6 +31,30 @@ namespace WebAddressBookTests
             manager.Navigator.ReturnToHomePage();
             return this;
         }
+
+        public ContactHelper Modify(int p, int contactdefine, ContactData newDataC)
+        {
+            manager.Navigator.GoToHomeTab();
+            SelectContact(p);
+            InitContactModification(contactdefine);
+            FillContactForm(newDataC);
+            SubmitContactModification();
+
+            manager.Navigator.ReturnToHomePage();
+            return this;
+        }
+
+        
+        public ContactHelper Remove(int p)
+        {
+            manager.Navigator.GoToHomeTab();
+            SelectContact(p);
+            RemoveContact();
+            CheckforRemoving();
+            manager.Navigator.GoToHomeTab();
+            return this;
+        }
+
         public ContactHelper InitNewContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
@@ -85,7 +100,6 @@ namespace WebAddressBookTests
             return this;
         }
 
-        
         public string CloseAlertAndGetItsText()
         {
             try
@@ -112,6 +126,18 @@ namespace WebAddressBookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             return this;
-        } 
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification(int contactdefine)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + contactdefine + "]")).Click();
+            return this;
+        }
     }
 }
