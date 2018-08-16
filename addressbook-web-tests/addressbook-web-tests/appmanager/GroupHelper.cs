@@ -27,9 +27,15 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public GroupHelper Modify(int v, GroupData newDataG)
+        
+        public GroupHelper Modify(GroupData group, int v, GroupData newDataG)
         {
             manager.Navigator.GoToGroupsPage();
+            if (!IsGroupExist())
+            {
+                Create(group);
+            }
+
             SelectGroup(v);
             InitGroupModification();
             FillGroupFrom(newDataG);
@@ -40,10 +46,18 @@ namespace WebAddressBookTests
             return this;
         }
 
-        
-        public GroupHelper Remove(int v)
+        public bool IsGroupExist()
+        {
+            return IsElementPresent(By.Name("selected[]"));
+        }
+
+        public GroupHelper Remove(GroupData group, int v)
         {
             manager.Navigator.GoToGroupsPage();
+            if (!IsGroupExist())
+            {
+                Create(group);
+            }
             SelectGroup(v);
             RemoveGroup();
 
