@@ -17,7 +17,7 @@ namespace WebAddressBookTests
             contact.Middlename = "Aleksandrovna";
             contact.Lastname = "Terentieva";
 
-            app.Contacts.Remove(contact, 31);
+            app.Contacts.Remove(contact, 39);
                       
         }
     }

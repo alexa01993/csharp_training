@@ -41,16 +41,29 @@ namespace WebAddressBookTests
 
         public void GoBackToGroupsPage()
         {
+            if (driver.Url == baseURL + "/addressbook/group.php"
+                && IsElementPresent(By.Name("new")))
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("group page")).Click();
         }
 
         public void ReturnToHomePage()
         {
+            if (driver.Url == baseURL + "/addressbook/")
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("home page")).Click();
         }
 
         public void GoToHomeTab()
         {
+            if (driver.Url == baseURL + "/addressbook/")
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("home")).Click();
         }
     }

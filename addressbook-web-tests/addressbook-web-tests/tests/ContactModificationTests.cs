@@ -26,7 +26,7 @@ namespace WebAddressBookTests
             contact.Middlename = "Aleksandrovna";
             contact.Lastname = "Terentieva";
 
-            app.Contacts.Modify(contact, 39, 1, newDataC);
+            app.Contacts.Modify(contact, 40, 1, newDataC);
         }
     }
 }
