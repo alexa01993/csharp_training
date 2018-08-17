@@ -22,7 +22,11 @@ namespace WebAddressBookTests
             newDataC.Mobilephone = "+453443";
             newDataC.Byear = null;
 
-            app.Contacts.Modify(7, 7, newDataC);
+            ContactData contact = new ContactData("Anna");
+            contact.Middlename = "Aleksandrovna";
+            contact.Lastname = "Terentieva";
+
+            app.Contacts.Modify(contact, 39, 1, newDataC);
         }
     }
 }
