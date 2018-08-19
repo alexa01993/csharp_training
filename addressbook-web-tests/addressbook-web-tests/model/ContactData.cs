@@ -6,33 +6,67 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string name;
-        private string middlename = "";
+        //private string middlename = "";
         private string lastname = "";
-        private string nickname = "";
-        private string address = "";
-        private string homephone = "";
-        private string mobilephone = "";
-        private string byear = "";
+        //private string nickname = "";
+        //private string address = "";
+        //private string homephone = "";
+        //private string mobilephone = "";
+        //private string byear = "";
         
         public ContactData(string name)
         {
             this.name = name;
         }
 
-        public ContactData(string name, string middlename,
-        string lastname, string nickname, string address, string homephone, string mobilephone, string byear)
+        public bool Equals(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return Name == other.Name && Lastname == other.Lastname;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() + Lastname.GetHashCode();
+
+        }
+
+        public override string ToString()
+        {
+            return "name=" + Name + ", lastname=" + Lastname;
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return Lastname.CompareTo(other.Lastname); 
+            }
+            return Name.CompareTo(other.name);
+        }
+
+        //(string name, string middlename,
+        //string lastname, string nickname, string address, string homephone, string mobilephone, string byear)
+        public ContactData(string name, string lastname)
         {
             this.name = name;
-            this.middlename = middlename;
+            //this.middlename = middlename;
             this.lastname = lastname;
-            this.nickname = nickname;
-            this.address = address;
-            this.homephone = homephone;
-            this.mobilephone = mobilephone;
-            this.byear = byear;
+            //this.nickname = nickname;
+            //this.address = address;
+            //this.homephone = homephone;
+            //this.mobilephone = mobilephone;
+            //this.byear = byear;
         }
         public string Name
         {
@@ -45,7 +79,7 @@ namespace WebAddressBookTests
                 name = value;
             }
         }
-        public string Middlename
+        /*public string Middlename
         {
             get
             {
@@ -55,7 +89,7 @@ namespace WebAddressBookTests
             {
                 middlename = value;
             }
-        }
+        }*/
         public string Lastname
         {
             get
@@ -67,7 +101,7 @@ namespace WebAddressBookTests
                 lastname = value;
             }
         }
-        public string Nickname
+        /*public string Nickname
         {
             get
             {
@@ -77,8 +111,8 @@ namespace WebAddressBookTests
             {
                 nickname = value;
             }
-        }
-        public string Address
+        }*/
+        /*public string Address
         {
             get
             {
@@ -88,8 +122,8 @@ namespace WebAddressBookTests
             {
                 address = value;
             }
-        }
-        public string Homephone
+        }*/
+        /*public string Homephone
         {
             get
             {
@@ -121,6 +155,6 @@ namespace WebAddressBookTests
             {
                 byear = value;
             }
-        }
+        }*/
     }
 }

@@ -13,7 +13,7 @@ namespace WebAddressBookTests
 {
     public class ContactHelper : HelperBase
     {
-        protected bool acceptNextAlert;
+        protected bool acceptNextAlert = true;
 
         public ContactHelper(ApplicationManager manager) 
             : base(manager)
@@ -48,6 +48,18 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomeTab();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr.odd"));
+            foreach (IWebElement element in elements)
+            {
+                contacts.Add(new ContactData(element.Text));
+            }
+            return contacts;
+        }
+
         private bool IsContactExist()
         {
             return IsElementPresent(By.Name("selected[]"));
@@ -76,13 +88,13 @@ namespace WebAddressBookTests
         public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.Name);
-            Type(By.Name("middlename"), contact.Middlename);
+            //Type(By.Name("middlename"), contact.Middlename);
             Type(By.Name("lastname"), contact.Lastname);
-            Type(By.Name("nickname"), contact.Nickname);
-            Type(By.Name("address"), contact.Address);
-            Type(By.Name("home"), contact.Homephone);
-            Type(By.Name("mobile"), contact.Mobilephone);
-            Type(By.Name("byear"), contact.Byear);
+            //Type(By.Name("nickname"), contact.Nickname);
+            //Type(By.Name("address"), contact.Address);
+            //Type(By.Name("home"), contact.Homephone);
+            //Type(By.Name("mobile"), contact.Mobilephone);
+            //Type(By.Name("byear"), contact.Byear);
             return this;
         }
 

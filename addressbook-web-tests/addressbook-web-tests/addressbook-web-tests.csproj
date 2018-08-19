@@ -81,7 +81,6 @@
     <Compile Include="tests\NewGroupCreationTests.cs" />
     <Compile Include="tests\NewContactCreationTests.cs" />
     <Compile Include="tests\TestBase.cs" />
-    <Compile Include="tests\UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
