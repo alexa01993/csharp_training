@@ -16,7 +16,7 @@ namespace WebAddressBookTests
             GroupData group = new GroupData("Colleagues");
             group.Header = "Head";
             group.Footer = "Goal";
-
+            d
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
             app.Groups.Remove(group, 0);
