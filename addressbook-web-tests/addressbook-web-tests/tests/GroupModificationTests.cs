@@ -21,15 +21,8 @@ namespace WebAddressBookTests
             group.Header = "Head";
             group.Footer = "Goal";
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            app.Groups.Modify(group, 1, newDataG);
 
-            app.Groups.Modify(group, 0, newDataG);
-
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups[0].Name = newDataG.Name;
-            oldGroups.Sort();
-            newGroups.Sort();
-            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

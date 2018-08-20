@@ -2,7 +2,6 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressBookTests
@@ -17,13 +16,7 @@ namespace WebAddressBookTests
             group.Header = "Head";
             group.Footer = "Goal";
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-
-            app.Groups.Remove(group, 0);
-
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups.RemoveAt(0);
-            Assert.AreEqual(oldGroups, newGroups);
+            app.Groups.Remove(group, 1);
         }
     }
 }
