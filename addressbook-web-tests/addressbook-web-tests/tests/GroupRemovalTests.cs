@@ -16,6 +16,10 @@ namespace WebAddressBookTests
             group.Header = "Head";
             group.Footer = "Goal";
 
+            if (!app.Groups.IsGroupExist())
+            {
+                app.Groups.Create(group);
+            }
             app.Groups.Remove(group, 1);
         }
     }

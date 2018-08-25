@@ -35,10 +35,7 @@ namespace WebAddressBookTests
         public ContactHelper Modify(ContactData contact, int p, int contactdefine, ContactData newDataC)
         {
             manager.Navigator.GoToHomeTab();
-            if (!IsContactExist())
-            {
-                Create(contact);
-            }
+          
             SelectContact(p);
             InitContactModification(contactdefine);
             FillContactForm(newDataC);
@@ -48,7 +45,7 @@ namespace WebAddressBookTests
             return this;
         }
 
-        private bool IsContactExist()
+        public bool IsContactExist()
         {
             return IsElementPresent(By.Name("selected[]"));
         }
@@ -56,10 +53,7 @@ namespace WebAddressBookTests
         public ContactHelper Remove(ContactData contact, int p)
         {
             manager.Navigator.GoToHomeTab();
-            if (!IsContactExist())
-            {
-                Create(contact);
-            }
+            
             SelectContact(p);
             RemoveContact();
             CheckforRemoving();
