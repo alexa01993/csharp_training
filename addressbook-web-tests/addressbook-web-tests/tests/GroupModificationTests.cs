@@ -21,6 +21,7 @@ namespace WebAddressBookTests
             group.Header = "Head";
             group.Footer = "Goal";
 
+            app.Navigator.GoToGroupsPage();
             if (!app.Groups.IsGroupExist())
             {
                 app.Groups.Create(group);

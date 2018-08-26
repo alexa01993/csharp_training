@@ -34,8 +34,7 @@ namespace WebAddressBookTests
 
         public ContactHelper Modify(ContactData contact, int p, int contactdefine, ContactData newDataC)
         {
-            manager.Navigator.GoToHomeTab();
-          
+                      
             SelectContact(p);
             InitContactModification(contactdefine);
             FillContactForm(newDataC);
@@ -52,7 +51,7 @@ namespace WebAddressBookTests
 
         public ContactHelper Remove(ContactData contact, int p)
         {
-            manager.Navigator.GoToHomeTab();
+            
             
             SelectContact(p);
             RemoveContact();

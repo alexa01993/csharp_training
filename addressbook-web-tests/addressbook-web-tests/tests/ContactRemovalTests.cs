@@ -17,11 +17,12 @@ namespace WebAddressBookTests
             contact.Middlename = "Aleksandrovna";
             contact.Lastname = "Terentieva";
 
+            app.Navigator.GoToHomeTab();
             if (!app.Contacts.IsContactExist())
             {
                 app.Contacts.Create(contact);
             }
-            app.Contacts.Remove(contact, 39);
+            app.Contacts.Remove(contact, 73);
                       
         }
     }

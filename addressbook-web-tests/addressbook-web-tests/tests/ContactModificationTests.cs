@@ -26,11 +26,12 @@ namespace WebAddressBookTests
             contact.Middlename = "Aleksandrovna";
             contact.Lastname = "Terentieva";
 
+            app.Navigator.GoToHomeTab();
             if (!app.Contacts.IsContactExist())
             {
                 app.Contacts.Create(contact);
             }
-            app.Contacts.Modify(contact, 40, 1, newDataC);
+            app.Contacts.Modify(contact, 72, 1, newDataC);
         }
     }
 }
