@@ -13,7 +13,7 @@ namespace WebAddressBookTests
 {
     public class ContactHelper : HelperBase
     {
-        protected bool acceptNextAlert;
+        protected bool acceptNextAlert = true;
 
         public ContactHelper(ApplicationManager manager) 
             : base(manager)
@@ -42,6 +42,22 @@ namespace WebAddressBookTests
 
             manager.Navigator.ReturnToHomePage();
             return this;
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+            foreach(IWebElement element in elements)
+            {
+                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                IWebElement lastname = cells[1];
+                IWebElement name = cells[2];
+                ContactData contact = new ContactData(name.Text, lastname.Text);
+                contacts.Add(contact);
+            }
+            return contacts;
         }
 
         public bool IsContactExist()
@@ -95,7 +111,7 @@ namespace WebAddressBookTests
         public ContactHelper CheckforRemoving()
         {
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
-            CloseAlertAndGetItsText();
+           // IAlert alert = driver.SwitchTo().Alert();
             return this;
         }
 
