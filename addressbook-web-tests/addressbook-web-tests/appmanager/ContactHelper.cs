@@ -95,6 +95,7 @@ namespace WebAddressBookTests
         public ContactHelper CheckforRemoving()
         {
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            CloseAlertAndGetItsText();
             return this;
         }
 
