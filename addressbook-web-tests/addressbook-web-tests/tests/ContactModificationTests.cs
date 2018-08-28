@@ -32,14 +32,26 @@ namespace WebAddressBookTests
                 app.Contacts.Create(contact);
             }
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData oldData = oldContacts[0];
 
-            app.Contacts.Modify(contact, 79, 1, newDataC);
+            app.Contacts.Modify(contact, 86, 1, newDataC);
+
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
+
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts[0].Name = newDataC.Name;
             oldContacts[0].Lastname = newDataC.Lastname;
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contactM in newContacts)
+            {
+                if (contactM.Id == oldData.Id)
+                {
+                    Assert.AreEqual(newDataC.Name, contactM.Name);
+                }
+            }
         }
     }
 }

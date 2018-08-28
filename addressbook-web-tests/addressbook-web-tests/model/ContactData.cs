@@ -8,9 +8,8 @@ namespace WebAddressBookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string name;
+        
         private string middlename = "";
-        private string lastname = "";
         private string nickname = "";
         private string address = "";
         private string homephone = "";
@@ -19,33 +18,25 @@ namespace WebAddressBookTests
         
         public ContactData(string name, string lastname)
         {
-            this.name = name;
-            this.lastname = lastname;
+            Name = name;
+            Lastname = lastname;
         }
 
-        public ContactData(string name, string middlename,
-        string lastname, string nickname, string address, string homephone, string mobilephone, string byear)
-        {
-            this.name = name;
-            this.middlename = middlename;
-            this.lastname = lastname;
-            this.nickname = nickname;
-            this.address = address;
-            this.homephone = homephone;
-            this.mobilephone = mobilephone;
-            this.byear = byear;
-        }
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
+        //public ContactData(string name, string middlename,
+        //string lastname, string nickname, string address, string homephone, string mobilephone, string byear)
+        //{
+        //    this.name = name;
+        //    this.middlename = middlename;
+        //    this.lastname = lastname;
+        //    this.nickname = nickname;
+        //    this.address = address;
+        //    this.homephone = homephone;
+        //    this.mobilephone = mobilephone;
+        //    this.byear = byear;
+        //}
+
+        public string Name { get; set; }
+        public string Lastname { get; set; }
 
         public bool Equals(ContactData other)
         {
@@ -89,6 +80,9 @@ namespace WebAddressBookTests
             }
             return compared;
         }
+
+        public string Id { get; set; }
+
         public string Middlename
         {
             get
@@ -100,17 +94,8 @@ namespace WebAddressBookTests
                 middlename = value;
             }
         }
-        public string Lastname
-        {
-            get
-            {
-                return lastname;
-            }
-            set
-            {
-                lastname = value;
-            }
-        }
+        
+        
         public string Nickname
         {
             get
