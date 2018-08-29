@@ -10,23 +10,37 @@ namespace WebAddressBookTests
 {
     [TestFixture]
 
-    public class ContactInformationTest : AuthTestBase
+    public class ContactInformationTests : AuthTestBase
     {
         [Test]
-        public void TestContactInformation()
+        public void TestContactInformationForEdit()
         {
             app.Navigator.GoToHomePage();
             app.Contacts.GetNumberOfSearchResults();
             app.Contacts.FillSearchField("w");
             app.Contacts.GetNumberOfSearchResults();
 
-            ContactData fromTable = app.Contacts.GetContactInformationFromTable(1);
-            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(1);
+            ContactData fromTable = app.Contacts.GetContactInformationFromTable(2);
+            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(2);
                         
             //verify
             Assert.AreEqual(fromTable, fromForm);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
             Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
+        }
+    
+
+            [Test]
+        public void TestContactInformationForPerson()
+        {
+            app.Navigator.GoToHomePage();
+
+            ContactData fromDetails = app.Contacts.GetContactInformationFromDetails(2);
+            app.Navigator.GoToHomePage();
+            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(2);
+
+            //verify
+            Assert.AreEqual(fromDetails.ContactInformationDetails, fromForm.ContactInformationDetails);
         }
     }
 }

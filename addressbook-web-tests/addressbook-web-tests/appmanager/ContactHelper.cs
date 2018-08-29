@@ -49,6 +49,7 @@ namespace WebAddressBookTests
         
         private List<ContactData> contactCache = null;
 
+        
         public List<ContactData> GetContactList()
         {
             if (contactCache == null)
@@ -218,6 +219,27 @@ namespace WebAddressBookTests
             };
             
         }
+
+        public ContactData GetContactInformationFromDetails(int contactdefine)
+        {
+            manager.Navigator.GoToHomePage();
+            ContactDetails(contactdefine);
+            string contactInformationDetails = driver.FindElement(By.Id("content")).Text.Replace(" ", "").Replace("\r\n", "").Replace("H:", "").Replace("M:", "").Replace("W:", "");
+            return new ContactData()
+            {
+                ContactInformationDetails = contactInformationDetails
+            };
+            
+        }
+
+        public ContactHelper ContactDetails(int contactdefine)
+        {
+            driver.FindElements(By.Name("entry"))[contactdefine]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+            return this;
+        }
+
 
         public int GetNumberOfSearchResults()
         {
