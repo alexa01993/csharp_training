@@ -13,7 +13,7 @@ namespace WebAddressBookTests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newDataC = new ContactData("Monica", "Geller");
+            ContactData newDataC = new ContactData("Monica", "Geller", "5 avenue", "7657675", "00978", "777");
             //newDataC.Middlename = null;
             //newDataC.Lastname = "Geller";
             //newDataC.Nickname = "Cool";
@@ -22,7 +22,7 @@ namespace WebAddressBookTests
             //newDataC.Mobilephone = "+453443";
             //newDataC.Byear = null;
 
-            ContactData contact = new ContactData("Anna", "Terentieva");
+            ContactData contact = new ContactData("Anna", "Terentieva", "popova", "7657675", "00978", "777");
             //contact.Middlename = "Aleksandrovna";
             //contact.Lastname = "Terentieva";
 
@@ -34,7 +34,7 @@ namespace WebAddressBookTests
             List<ContactData> oldContacts = app.Contacts.GetContactList();
             ContactData oldData = oldContacts[0];
 
-            app.Contacts.Modify(contact, 86, 1, newDataC);
+            app.Contacts.Modify(contact, 1, newDataC);
 
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
 

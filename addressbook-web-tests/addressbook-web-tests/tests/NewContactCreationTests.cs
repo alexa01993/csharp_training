@@ -17,7 +17,7 @@ namespace WebAddressBookTests
         public void NewContactCreation()
         {
             
-            ContactData contact = new ContactData("Anna", "Terentieva");
+            ContactData contact = new ContactData("Anna", "Terentieva", "popova street 2", "559668", "8978568", "654654");
             //contact.Middlename = "Aleksandrovna";
             //contact.Lastname = "Terentieva";
             //contact.Nickname = "Kim";
@@ -44,7 +44,7 @@ namespace WebAddressBookTests
         public void EmptyContactCreation()
         {
 
-            ContactData contact = new ContactData("", "");
+            ContactData contact = new ContactData("", "", "", "", "", "");
             //contact.Middlename = "";
             //contact.Lastname = "";
             //contact.Nickname = "";

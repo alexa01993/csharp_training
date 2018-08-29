@@ -3,40 +3,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressBookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        
-        private string middlename = "";
-        private string nickname = "";
-        private string address = "";
-        private string homephone = "";
-        private string mobilephone = "";
-        private string byear = "";
-        
+        private string allPhones;
+
         public ContactData(string name, string lastname)
         {
             Name = name;
             Lastname = lastname;
         }
 
-        //public ContactData(string name, string middlename,
-        //string lastname, string nickname, string address, string homephone, string mobilephone, string byear)
-        //{
-        //    this.name = name;
-        //    this.middlename = middlename;
-        //    this.lastname = lastname;
-        //    this.nickname = nickname;
-        //    this.address = address;
-        //    this.homephone = homephone;
-        //    this.mobilephone = mobilephone;
-        //    this.byear = byear;
-        //}
+        public ContactData(string name, string lastname, string address, string homephone, string mobilephone, string work)
+        {
+            Name = name;
+            Lastname = lastname;
+
+            Address = address;
+            HomePhone = homephone;
+            MobilePhone = mobilephone;
+            WorkPhone = work;
+        }
 
         public string Name { get; set; }
+
         public string Lastname { get; set; }
+
+        public string Address { get; set; }
+
+        public string HomePhone { get; set; }
+
+        public string MobilePhone { get; set; }
+
+        public string WorkPhone { get; set; }
+
+        public string AllPhones {
+            get
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }
+            }
+            
+            set
+            {
+                allPhones = value;
+            }
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+        }
 
         public bool Equals(ContactData other)
         {
@@ -83,73 +113,6 @@ namespace WebAddressBookTests
 
         public string Id { get; set; }
 
-        public string Middlename
-        {
-            get
-            {
-                return middlename;
-            }
-            set
-            {
-                middlename = value;
-            }
-        }
         
-        
-        public string Nickname
-        {
-            get
-            {
-                return nickname;
-            }
-            set
-            {
-                nickname = value;
-            }
-        }
-        public string Address
-        {
-            get
-            {
-                return address;
-            }
-            set
-            {
-                address = value;
-            }
-        }
-        public string Homephone
-        {
-            get
-            {
-                return homephone;
-            }
-            set
-            {
-                homephone = value;
-            }
-        }
-        public string Mobilephone
-        {
-            get
-            {
-                return mobilephone;
-            }
-            set
-            {
-                mobilephone = value;
-            }
-        }
-        public string Byear
-        {
-            get
-            {
-                return byear;
-            }
-            set
-            {
-                byear = value;
-            }
-        }
     }
 }

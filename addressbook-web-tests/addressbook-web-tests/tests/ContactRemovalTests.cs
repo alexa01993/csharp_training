@@ -14,7 +14,7 @@ namespace WebAddressBookTests
         [Test]
         public void ContactRemovalTest()
         {
-            ContactData contact = new ContactData("Anna", "Terentieva");
+            ContactData contact = new ContactData("Anna", "Terentieva", "popova street 2", "559668", "8978568", "654654");
             //contact.Middlename = "Aleksandrovna";
             //contact.Lastname = "Terentieva";
 
@@ -25,7 +25,7 @@ namespace WebAddressBookTests
             }
             
             List<ContactData> oldContacts = app.Contacts.GetContactList();
-            app.Contacts.Remove(contact, 85);
+            app.Contacts.Remove(contact, 90);
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
 

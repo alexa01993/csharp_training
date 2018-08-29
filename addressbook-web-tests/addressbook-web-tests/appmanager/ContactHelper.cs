@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
 
 namespace WebAddressBookTests
 {
@@ -22,6 +23,7 @@ namespace WebAddressBookTests
         }
 
         
+
         public ContactHelper Create(ContactData contact)
         {
             
@@ -32,10 +34,10 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData contact, int p, int contactdefine, ContactData newDataC)
+        public ContactHelper Modify(ContactData contact, int contactdefine, ContactData newDataC)
         {
                       
-            SelectContact(p);
+            //SelectContact(p);
             InitContactModification(contactdefine);
             FillContactForm(newDataC);
             SubmitContactModification();
@@ -99,13 +101,11 @@ namespace WebAddressBookTests
         public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.Name);
-            Type(By.Name("middlename"), contact.Middlename);
             Type(By.Name("lastname"), contact.Lastname);
-            Type(By.Name("nickname"), contact.Nickname);
             Type(By.Name("address"), contact.Address);
-            Type(By.Name("home"), contact.Homephone);
-            Type(By.Name("mobile"), contact.Mobilephone);
-            Type(By.Name("byear"), contact.Byear);
+            Type(By.Name("home"), contact.HomePhone);
+            Type(By.Name("mobile"), contact.MobilePhone);
+            Type(By.Name("work"), contact.WorkPhone);
             return this;
         }
 
@@ -170,7 +170,67 @@ namespace WebAddressBookTests
 
         public ContactHelper InitContactModification(int contactdefine)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + contactdefine + "]")).Click();
+            //driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + contactdefine + "]")).Click();
+            driver.FindElements(By.Name("entry"))[contactdefine]
+                .FindElements(By.TagName("td"))[7]
+                .FindElement(By.TagName("a")).Click();
+            return this;
+        }
+
+        public ContactData GetContactInformationFromTable(int contactdefine)
+        {
+            //manager.Navigator.GoToHomePage();
+
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[contactdefine]
+                .FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allPhones = cells[5].Text;
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                AllPhones = allPhones,
+                
+            };
+
+        }
+
+        public ContactData GetContactInformationFromEditForm(int contactdefine)
+        {
+            //manager.Navigator.GoToHomePage();
+            InitContactModification(contactdefine);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone
+            };
+            
+        }
+
+        public int GetNumberOfSearchResults()
+        {
+            //manager.Navigator.GoToHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+        }
+
+        public ContactHelper FillSearchField(string searchElement)
+        {
+            driver.FindElement(By.Name("searchstring")).Click();
+            driver.FindElement(By.Name("searchstring")).SendKeys(searchElement);
             return this;
         }
     }
