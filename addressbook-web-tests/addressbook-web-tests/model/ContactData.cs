@@ -119,7 +119,8 @@ namespace WebAddressBookTests
 
         public override string ToString()
         {
-            return "lastname=" + Lastname + ", name=" + Name;
+            return "lastname=" + Lastname + "\nname=" + Name + "\naddress=" + Address + 
+                "\nmphone= " + MobilePhone + "\nhphone= " + HomePhone + "\nwphone= " + WorkPhone;
         }
 
         public int CompareTo(ContactData other)
