@@ -10,6 +10,7 @@ namespace WebAddressBookTests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
+        private string emails;
         private string contactInformationDetails;
 
         public ContactData(string name, string lastname)
@@ -44,6 +45,12 @@ namespace WebAddressBookTests
 
         public string WorkPhone { get; set; }
 
+        public string Email1 { get; set; }
+
+        public string Email2 { get; set; }
+
+        public string Email3 { get; set; }
+
         public string ContactInformationDetails
         {
             get
@@ -54,11 +61,11 @@ namespace WebAddressBookTests
                 }
                 else
                 {
-                    return (((Name + Lastname + Address + HomePhone + MobilePhone + WorkPhone).Trim())).Replace(" ", "");
+                    return (((Name + Lastname + Address + PhoneAddSymbol("H:", HomePhone) + 
+                        PhoneAddSymbol("M:", MobilePhone) + PhoneAddSymbol("W:", WorkPhone) + Email1
+                        + Email2 + Email3).Trim())).Replace(" ", "");
 
                 }
-
-            
             }
             set
             {
@@ -83,6 +90,44 @@ namespace WebAddressBookTests
             {
                 allPhones = value;
             }
+        }
+
+        public string Emails
+        {
+            get
+            {
+                if (emails != null)
+                {
+                    return emails;
+                }
+                else
+                {
+                    return (EmailCleanUp(Email1) + EmailCleanUp(Email2) + EmailCleanUp(Email3)).Trim();
+                }
+            }
+
+            set
+            {
+                emails = value;
+            }
+        }
+
+        private string PhoneAddSymbol(string index, string phone)
+        {
+            if (phone == "")
+            {
+                return "";
+            }
+            return (index + phone);
+        }
+
+        private string EmailCleanUp(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return email + "\r\n";
         }
 
         private string CleanUp(string phone)
@@ -119,7 +164,8 @@ namespace WebAddressBookTests
 
         public override string ToString()
         {
-            return "lastname=" + Lastname + "\nname=" + Name + "\naddress=" + Address + 
+            return "lastname=" + Lastname + "\nname=" + Name + "\naddress=" + Address +
+                "\nmemail1= " + Email1 + "\nhemail2= " + Email2 + "\nwemail3= " + Email3 +
                 "\nmphone= " + MobilePhone + "\nhphone= " + HomePhone + "\nwphone= " + WorkPhone;
         }
 
