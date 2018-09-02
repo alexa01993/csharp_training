@@ -13,6 +13,10 @@ namespace WebAddressBookTests
         private string emails;
         private string contactInformationDetails;
 
+        public ContactData()
+        {
+        }
+
         public ContactData(string name, string lastname)
         {
             Name = name;
@@ -30,9 +34,6 @@ namespace WebAddressBookTests
             WorkPhone = work;
         }
 
-        public ContactData()
-        {
-        }
         public string Name { get; set; }
 
         public string Lastname { get; set; }
