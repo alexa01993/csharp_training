@@ -9,11 +9,12 @@ using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Linq;
 
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class NewGroupCreationTests : AuthTestBase
+    public class NewGroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -33,7 +34,7 @@ namespace WebAddressBookTests
         public static IEnumerable<GroupData> GroupDataFromCsvFile()
         {
             List<GroupData> groups = new List<GroupData>();
-            
+
             string[] lines = File.ReadAllLines(@"group.csv");
             foreach (string l in lines)
             {
@@ -50,9 +51,9 @@ namespace WebAddressBookTests
 
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
-                return (List<GroupData>) 
-                new XmlSerializer(typeof(List<GroupData>))
-                .Deserialize(new StreamReader(@"groups.xml"));
+            return (List<GroupData>)
+            new XmlSerializer(typeof(List<GroupData>))
+            .Deserialize(new StreamReader(@"groups.xml"));
 
         }
 
@@ -83,7 +84,7 @@ namespace WebAddressBookTests
             app.Visible = false;
             app.Quit();
             return groups;
-            
+
         }
 
         [Test, TestCaseSource("GroupDataFromExcelFile")]
@@ -92,21 +93,21 @@ namespace WebAddressBookTests
         //[Test, TestCaseSource("GroupDataFromFile")]
         public void NewGroupCreation(GroupData group)
         {
-            
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            List<GroupData> oldGroups = GroupData.GetAll();
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
         }
 
-        
+
         [Test]
         public void BadGroupCreation()
         {
@@ -125,5 +126,20 @@ namespace WebAddressBookTests
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
         }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+        }
+
     }
 }
