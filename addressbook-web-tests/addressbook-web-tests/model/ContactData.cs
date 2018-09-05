@@ -72,6 +72,11 @@ namespace WebAddressBookTests
 
         public string Email3 { get; set; }
 
+        [Column(Name = "deprecated")]
+
+        public string Deprecated { get; set; }
+
+
         public string ContactInformationDetails
         {
             get
@@ -209,6 +214,12 @@ namespace WebAddressBookTests
 
         public string Id { get; set; }
 
-        
+        public static List<ContactData> GetAll()
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).OrderBy(x => x.Lastname).ToList();
+            }
+        }
     }
 }
